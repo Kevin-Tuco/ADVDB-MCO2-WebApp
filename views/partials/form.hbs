@@ -1,0 +1,94 @@
+                <!-- Right-hand side - Add Appointments -->
+                <!-- Action selection -->
+                <div class="mb-3">
+                    <label class="form-label">Action</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="action" id="add" value="add" checked>
+                        <label class="form-check-label" for="add">
+                            Add Appointment
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="action" id="update" value="update">
+                        <label class="form-check-label" for="update">
+                            Update Appointment
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="action" id="delete" value="delete">
+                        <label class="form-check-label" for="delete">
+                            Delete Appointment
+                        </label>
+                    </div>
+                </div>
+
+                <form id="add-appointment-form">
+                    <div class="add-element form-element" style="display: none;">
+                        <div class="mb-3">
+                            <label for="pxid" class="form-label">PX ID</label>
+                            <select class="form-select" id="pxid" name="pxid">
+                                <!-- Options loaded dynamically using JavaScript -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clinicid" class="form-label">Clinic ID</label>
+                            <select class="form-select" id="clinicid" name="clinicid">
+                                <!-- Options loaded dynamically using JavaScript -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="Complete">Complete</option>
+                                <option value="Queued">Queued</option>
+                                <option value="Cancel">Cancel</option>
+                                <option value="NoShow">No Show</option>
+                                <option value="Serving">Serving</option>
+                                <option value="Skip">Skip</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="QueueDate" class="form-label">Queue Date</label>
+                            <input type="date" class="form-control" id="QueueDate" name="QueueDate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="app_type" class="form-label">Application Type</label>
+                            <select class="form-select" id="app_type" name="app_type">
+                                <option value="Consultation">Consultation</option>
+                                <option value="Inpatient">Inpatient</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="is_Virtual" class="form-label">Virtual?</label>
+                            <select class="form-select" id="is_Virtual" name="is_Virtual">
+                                <option value="TRUE">TRUE</option>
+                                <option value="FALSE">FALSE</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Additional form elements for updating appointment -->
+                    <div class="update-element form-element" style="display: none;">
+                        <!-- Elements for updating appointment -->
+                        <div class="mb-3">
+                            <label for="is_Virtual" class="form-label">Virtual? In Update</label>
+                            <select class="form-select" id="is_Virtual" name="is_Virtual">
+                                <option value="TRUE">TRUE</option>
+                                <option value="FALSE">FALSE</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Additional form elements for deleting appointment -->
+                    <div class="delete-element form-element" style="display: none;">
+                        <!-- Elements for deleting appointment -->
+                        <div class="mb-3">
+                            <label for="is_Virtual" class="form-label">Virtual? In Delete</label>
+                            <select class="form-select" id="is_Virtual" name="is_Virtual">
+                                <option value="TRUE">TRUE</option>
+                                <option value="FALSE">FALSE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
