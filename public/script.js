@@ -3,6 +3,9 @@
 // Handle change in action radio buttons
 const actionRadios = document.querySelectorAll('input[name="action"]');
 const appointmentForm = document.getElementById('add-appointment-form');
+const addSubmitMessage = document.querySelector('.add-submit-message');
+const updateSubmitMessage = document.querySelector('.update-submit-message');
+const deleteSubmitMessage = document.querySelector('.delete-submit-message');
 
 actionRadios.forEach(radio => {
     radio.addEventListener('change', () => {
@@ -12,6 +15,7 @@ actionRadios.forEach(radio => {
         document.querySelectorAll('.form-element').forEach(element => {
             element.style.display = 'none';
         });
+        //Clear all
 
         // Show specific form elements based on the selected action
         if (selectedAction === 'add') {
@@ -30,24 +34,7 @@ actionRadios.forEach(radio => {
     });
 });
 
-// Handle form submission
-const form = document.getElementById('add-appointment-form');
-form.addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    const selectedAction = document.querySelector('input[name="action"]:checked').value;
-
-    if (selectedAction === 'add') {
-        // Add appointment directly in JavaScript
-        const formData = new FormData(form);
-        const appointmentData = Object.fromEntries(formData.entries());
-        console.log('Adding appointment:', appointmentData);
-        // You can add your logic here to handle adding appointment
-    } else if (selectedAction === 'update') {
-        // Handle update logic
-        console.log('Update appointment');
-    } else if (selectedAction === 'delete') {
-        // Handle delete logic
-        console.log('Delete appointment');
-    }
+// Initially, show elements for adding appointment
+document.querySelectorAll('.add-element').forEach(element => {
+    element.style.display = 'block';
 });

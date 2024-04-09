@@ -26,19 +26,22 @@
                     <div class="add-element form-element" style="display: none;">
                         <div class="mb-3">
                             <label for="pxid" class="form-label">PX ID</label>
-                            <select class="form-select" id="pxid" name="pxid">
-                                <!-- Options loaded dynamically using JavaScript -->
-                            </select>
+                            <input type="text" class="form-control" id="add_pxid" name="pxid" style="text-transform:uppercase;">
+                            <div class="pxid-error"></div>
                         </div>
                         <div class="mb-3">
                             <label for="clinicid" class="form-label">Clinic ID</label>
-                            <select class="form-select" id="clinicid" name="clinicid">
-                                <!-- Options loaded dynamically using JavaScript -->
-                            </select>
+                            <input type="text" class="form-control" id="add_clinicid" name="clinicid" style="text-transform:uppercase;">
+                            <div class="clinicid-error"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="doctorid" class="form-label">Doctor ID</label>
+                            <input type="text" class="form-control" id="add_doctorid" name="doctorid" style="text-transform:uppercase;">
+                            <div class="doctorid-error"></div>
                         </div>
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
-                            <select class="form-select" id="status" name="status">
+                            <select class="form-select" id="add_status" name="status">
                                 <option value="Complete">Complete</option>
                                 <option value="Queued">Queued</option>
                                 <option value="Cancel">Cancel</option>
@@ -49,36 +52,86 @@
                         </div>
                         <div class="mb-3">
                             <label for="QueueDate" class="form-label">Queue Date</label>
-                            <input type="date" class="form-control" id="QueueDate" name="QueueDate">
+                            <input type="date" class="form-control" id="add_QueueDate" name="QueueDate">
                         </div>
                         <div class="mb-3">
                             <label for="app_type" class="form-label">Application Type</label>
-                            <select class="form-select" id="app_type" name="app_type">
+                            <select class="form-select" id="add_app_type" name="app_type">
                                 <option value="Consultation">Consultation</option>
                                 <option value="Inpatient">Inpatient</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="is_Virtual" class="form-label">Virtual?</label>
-                            <select class="form-select" id="is_Virtual" name="is_Virtual">
+                            <select class="form-select" id="add_is_Virtual" name="is_Virtual">
                                 <option value="TRUE">TRUE</option>
                                 <option value="FALSE">FALSE</option>
                             </select>
                         </div>
+                        <button type="submit" class="btn btn-primary form-element add-element submit-add">Submit</button>
+                        <div class="add-submit-message"></div>
                     </div>
-
+                </form>
+                
+                <form id="update-appointment-form">
                     <!-- Additional form elements for updating appointment -->
                     <div class="update-element form-element" style="display: none;">
                         <!-- Elements for updating appointment -->
                         <div class="mb-3">
-                            <label for="is_Virtual" class="form-label">Virtual? In Update</label>
-                            <select class="form-select" id="is_Virtual" name="is_Virtual">
+                            <label for="pxid" class="form-label">Appointment ID</label>
+                            <input type="text" class="form-control" id="update_apptid" name="pxid" style="text-transform:uppercase;">
+                            <div class="pxid-error"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pxid" class="form-label">PX ID</label>
+                            <input type="text" class="form-control" id="update_pxid" name="pxid" style="text-transform:uppercase;">
+                            <div class="pxid-error"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clinicid" class="form-label">Clinic ID</label>
+                            <input type="text" class="form-control" id="update_clinicid" name="clinicid" style="text-transform:uppercase;">
+                            <div class="clinicid-error"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="doctorid" class="form-label">Doctor ID</label>
+                            <input type="text" class="form-control" id="update_doctorid" name="doctorid" style="text-transform:uppercase;">
+                            <div class="doctorid-error"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="update_status" name="status">
+                                <option value="Complete">Complete</option>
+                                <option value="Queued">Queued</option>
+                                <option value="Cancel">Cancel</option>
+                                <option value="NoShow">No Show</option>
+                                <option value="Serving">Serving</option>
+                                <option value="Skip">Skip</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="QueueDate" class="form-label">Queue Date</label>
+                            <input type="date" class="form-control" id="update_QueueDate" name="QueueDate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="app_type" class="form-label">Application Type</label>
+                            <select class="form-select" id="update_app_type" name="app_type">
+                                <option value="Consultation">Consultation</option>
+                                <option value="Inpatient">Inpatient</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="is_Virtual" class="form-label">Virtual?</label>
+                            <select class="form-select" id="update_is_Virtual" name="is_Virtual">
                                 <option value="TRUE">TRUE</option>
                                 <option value="FALSE">FALSE</option>
                             </select>
                         </div>
+                        <button type="submit" class="btn btn-primary form-element update-element submit-update">Submit</button>
+                        <div class="update-submit-message"></div>
                     </div>
-
+                </form>
+                
+                <form id="delete-appointment-form">
                     <!-- Additional form elements for deleting appointment -->
                     <div class="delete-element form-element" style="display: none;">
                         <!-- Elements for deleting appointment -->
@@ -89,6 +142,10 @@
                                 <option value="FALSE">FALSE</option>
                             </select>
                         </div>
+                        <button type="submit" class="btn btn-primary submit-delete">Submit</button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+
+                <script src="add_form_script.js"></script>
+                <script src="update_form_script.js"></script>
+                <script src="delete_form_script.js"></script>
