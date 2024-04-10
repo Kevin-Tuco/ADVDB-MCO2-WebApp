@@ -62,6 +62,7 @@ app.get('/', (req, res) => {
 // Route to get distinct values for a filter
 app.get('/getDistinctValues', (req, res) => {
     const filter = req.query.filter;
+    //console.log("Filter: " +filter);
     const sql = `SELECT DISTINCT ${filter} FROM appointments LIMIT 50`;
     connection.query(sql, (err, results) => {
         if (err) {
@@ -145,6 +146,26 @@ app.get('/checkDoctorid', (req, res) => {
     });
 });
 
+// Endpoint to check if apptid exists
+app.get('/checkApptid', (req, res) => {
+    //console.log("in /checkApptid");
+    const apptid = req.query.apptid.toUpperCase(); // Convert to uppercase
+
+    // Query to check if apptid exists
+    const query = `SELECT COUNT(*) AS count FROM appointments WHERE apptid = ?`;
+    connection.query(query, [apptid], (error, results) => {
+        if (error) {
+            console.error('Error checking apptid:', error);
+            res.status(500).json({ error: 'Internal server error' });
+            return;
+        }
+
+        // Check if apptid exists
+        const apptidExists = results[0].count > 0;
+        res.json({ exists: apptidExists });
+    });
+});
+
 // Endpoint to add appointment data to the database
 app.post('/addAppointment', async (req, res) => {
     const { add_pxid, add_clinicid, add_doctorid, add_status, add_QueueDate, add_app_type, add_is_Virtual } = req.body;
@@ -173,6 +194,89 @@ app.post('/addAppointment', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+// Endpoint to add appointment data to the database
+app.post('/updateAppointment', async (req, res) => {
+    const { update_apptid, update_status, update_StartTime, update_EndTime, update_app_type, update_is_Virtual } = req.body;
+
+    try {
+        // Check if update_EndTime or update_StartTime are empty, use NULL instead
+        const values = [update_status, update_StartTime || null, update_EndTime || null, update_app_type, update_is_Virtual, update_apptid];
+        console.log('Values before adding: ' + values);
+
+        // Update the appointment data in the database
+        const query = 'UPDATE appointments SET status = ?, StartTime = ?, EndTime = ?, app_type = ?, is_Virtual = ? WHERE apptid = ?';
+        connection.query(query, values, (error, results) => {
+            if (error) {
+                console.error('Error updating appointment:', error);
+                res.status(500).json({ error: 'Internal server error' });
+                return;
+            }
+
+            // Respond with success message or updated ID
+            res.json({ success: true, updatedId: update_apptid });
+        });
+    } catch (error) {
+        console.error('Error updating appointment:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Endpoint to add appointment data to the database
+app.post('/deleteAppointment', async (req, res) => {
+    const { delete_apptid } = req.body;
+
+    try {
+        values = delete_apptid;
+        // Update the appointment data in the database
+        const query = 'DELETE FROM appointments WHERE apptid = ?';
+        connection.query(query, values, (error, results) => {
+            if (error) {
+                console.error('Error updating appointment:', error);
+                res.status(500).json({ error: 'Internal server error' });
+                return;
+            }
+
+            // Respond with success message or updated ID
+            res.json({ success: true});
+        });
+    } catch (error) {
+        console.error('Error updating appointment:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Endpoint to retrieve appointment data based on apptid
+app.get('/getAppointmentData', (req, res) => {
+    //console.log("in /getAppointmentData");
+    const { apptid } = req.query;
+
+    // Query to retrieve appointment data based on apptid
+    const query = 'SELECT * FROM appointments WHERE apptid = ?';
+    connection.query(query, [apptid], (error, results) => {
+        if (error) {
+            console.error('Error fetching appointment data:', error);
+            res.status(500).json({ error: 'Internal server error' });
+            return;
+        }
+
+        // Log the received apptid and results for debugging
+        //console.log('Received apptid:', apptid);
+        //console.log('Query results:', results);
+
+        // If appointment data is found, send it in the response
+        if (results.length > 0) {
+            const appointmentData = results[0];
+            //console.log("appointmentData: ", appointmentData);
+            res.json(appointmentData);
+        } else {
+            //console.log("Appointment data not found");
+            res.status(404).json({ error: 'Appointment data not found' });
+        }
+    });
+});
+
+
 
 // Function to generate apptid with the specified pattern
 function generateApptId() {
@@ -210,8 +314,6 @@ function generateApptId() {
         });
     });
 }
-
-
 
 // Start server
 const PORT = process.env.PORT || 3000;

@@ -15,6 +15,9 @@ actionRadios.forEach(radio => {
         document.querySelectorAll('.form-element').forEach(element => {
             element.style.display = 'none';
         });
+        document.querySelectorAll('.submes').forEach(element => {
+            element.textContent = '';
+        });
         //Clear all
 
         // Show specific form elements based on the selected action
@@ -28,6 +31,10 @@ actionRadios.forEach(radio => {
             });
         } else if (selectedAction === 'delete') {
             document.querySelectorAll('.delete-element').forEach(element => {
+                element.style.display = 'block';
+            });
+        } else if (selectedAction === 'report') {
+            document.querySelectorAll('.report-element').forEach(element => {
                 element.style.display = 'block';
             });
         }

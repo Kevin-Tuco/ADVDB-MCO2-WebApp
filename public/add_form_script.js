@@ -2,9 +2,9 @@
 
 /* ---- ADD FORM ---- */
 // Select the input fields
-const pxidInput = document.getElementById('pxid');
-const clinicidInput = document.getElementById('clinicid');
-const doctoridInput = document.getElementById('doctorid');
+const pxidInput = document.getElementById('add_pxid');
+const clinicidInput = document.getElementById('add_clinicid');
+const doctoridInput = document.getElementById('add_doctorid');
 const submitButton = document.querySelector('.submit-add');
 
 // Add event listeners to pxid and clinicid inputs
@@ -15,19 +15,24 @@ doctoridInput.addEventListener('input', checkDoctorid);
 function checkPxid() {
     console.log("In CheckPxid");
     const pxidValue = pxidInput.value.toUpperCase();
-    if (!pxidValue) return;
 
+    // Clear the error message if the input is empty
+    if (!pxidValue) {
+        const errorDiv = document.querySelector('.add_pxid-error');
+        errorDiv.textContent = '';
+        return;
+    }
     // Call an API endpoint to check if pxid exists in the database
     fetch(`/checkPxid?pxid=${pxidValue}`)
         .then(response => response.json())
         .then(data => {
             if (!data.exists) {
                 disableSubmitButton();
-                const errorDiv = document.querySelector('.pxid-error');
+                const errorDiv = document.querySelector('.add_pxid-error');
                 errorDiv.textContent = 'pxid not found';
             } else {
                 enableSubmitButton();
-                const errorDiv = document.querySelector('.pxid-error');
+                const errorDiv = document.querySelector('.add_pxid-error');
                 errorDiv.textContent = '';
             }
         })
@@ -40,7 +45,12 @@ function checkPxid() {
 function checkClinicid() {
     console.log("In CheckClinicId");
     const clinicidValue = clinicidInput.value.toUpperCase();
-    if (!clinicidValue) return;
+    // Clear the error message if the input is empty
+    if (!clinicidValue) {
+        const errorDiv = document.querySelector('.add_clinicid-error');
+        errorDiv.textContent = '';
+        return;
+    }
 
     // Call an API endpoint to check if clinicid exists in the database
     fetch(`/checkClinicid?clinicid=${clinicidValue}`)
@@ -48,11 +58,11 @@ function checkClinicid() {
         .then(data => {
             if (!data.exists) {
                 disableSubmitButton();
-                const errorDiv = document.querySelector('.clinicid-error');
+                const errorDiv = document.querySelector('.add_clinicid-error');
                 errorDiv.textContent = 'clinicid not found';
             } else {
                 enableSubmitButton();
-                const errorDiv = document.querySelector('.clinicid-error');
+                const errorDiv = document.querySelector('.add_clinicid-error');
                 errorDiv.textContent = '';
             }
         })
@@ -63,8 +73,13 @@ function checkClinicid() {
 
 // Function to check if doctorid exists
 function checkDoctorid() {
-    const doctoridValue = doctorid.value.toUpperCase();
-    if (!doctoridValue) return;
+    const doctoridValue = doctoridInput.value.toUpperCase();
+    // Clear the error message if the input is empty
+    if (!doctoridValue) {
+        const errorDiv = document.querySelector('.add_doctorid-error');
+        errorDiv.textContent = '';
+        return;
+    }
 
     // Call an API endpoint to check if pxid exists in the database
     fetch(`/checkDoctorid?doctorid=${doctoridValue}`)
@@ -72,11 +87,11 @@ function checkDoctorid() {
         .then(data => {
             if (!data.exists) {
                 disableSubmitButton();
-                const errorDiv = document.querySelector('.doctorid-error');
+                const errorDiv = document.querySelector('.add_doctorid-error');
                 errorDiv.textContent = 'doctorid not found';
             } else {
                 enableSubmitButton();
-                const errorDiv = document.querySelector('.doctorid-error');
+                const errorDiv = document.querySelector('.add_doctorid-error');
                 errorDiv.textContent = '';
             }
         })
